@@ -1,0 +1,17 @@
+# ignore ALL .log files
+*.log
+
+# ignore ALL files in the directory named ipynb_checkpoints
+.ipynb_checkpoints/
+
+# ignore the file named
+Notebook to be saved as Model Training script.ipynb
+Logistic Regression.pkl
+config.json
+
+# Ignore MLflow mlruns directory
+mlruns/
+
+# Ignore files in Other folder
+Other_files/
+azure-ml-labs/

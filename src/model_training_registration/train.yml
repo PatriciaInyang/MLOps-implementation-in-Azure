@@ -1,0 +1,26 @@
+$schema: https://azuremlschemas.azureedge.net/latest/commandComponent.schema.json
+name: train_model
+display_name: Model development from data
+version: 1
+type: command
+inputs:
+  input_data: 
+    type: uri_file
+outputs:
+  model:
+    type: uri_folder
+  test_data: 
+    type: uri_file
+  train_data:
+    type: uri_file
+  metrics_file:
+    type: uri_file
+code: .
+environment: azureml:Aml-env@latest
+command: >-
+  python train.py 
+  --input_data ${{inputs.input_data}}
+  --model ${{outputs.model}}
+  --test_data ${{outputs.test_data}}
+  --train_data ${{outputs.train_data}}
+  --metrics_file ${{outputs.metrics_file}}

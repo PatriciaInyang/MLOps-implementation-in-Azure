@@ -1,0 +1,23 @@
+$schema: https://azuremlschemas.azureedge.net/latest/commandComponent.schema.json
+name: register_model
+display_name: Registered model
+version: 1
+type: command
+inputs:
+  model: 
+    type: uri_folder
+  metrics_file:
+    type: uri_file
+  validation_result:
+    type: uri_file
+outputs:
+  model_reg_output:
+    type: uri_file
+code: .
+environment: azureml:Aml-env@latest
+command: >-
+  python model_reg.py 
+  --model ${{inputs.model}}
+  --metrics_file ${{inputs.metrics_file}}
+  --validation_result ${{inputs.validation_result}}
+  --model_reg_output ${{outputs.model_reg_output}}

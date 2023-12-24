@@ -1,0 +1,13 @@
+$schema: https://azuremlschemas.azureedge.net/latest/pipelineComponent.schema.json
+name: setup_model_rai_dashboard
+display_name: setup_model_rai_dashboard
+type: pipeline
+jobs:
+  main_job:
+    type: command
+    component:
+        code: .
+        environment: azureml:Aml-env@latest
+        command: >-
+          RAI_dashboard.py 
+ 

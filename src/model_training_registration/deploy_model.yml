@@ -1,0 +1,17 @@
+$schema: https://azuremlschemas.azureedge.net/latest/commandComponent.schema.json
+name: deploy_model
+display_name: model deployment
+version: 1
+type: command
+inputs:
+  model_reg_output:
+    type: uri_file
+outputs:
+  model_deploy_output:
+    type: uri_file
+code: .
+environment: azureml:Aml-env@latest
+command: >-
+  python deploy_model.py 
+  --model_reg_output ${{inputs.model_reg_output}}
+  --model_deploy_output ${{outputs.model_deploy_output}}

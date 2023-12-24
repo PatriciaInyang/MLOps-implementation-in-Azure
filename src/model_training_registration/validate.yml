@@ -1,0 +1,17 @@
+$schema: https://azuremlschemas.azureedge.net/latest/commandComponent.schema.json
+name: review_model
+display_name: validate_newly_trained_model
+version: 1
+type: command
+inputs:
+  metrics_file:
+    type: uri_file
+outputs:
+  validation_result:
+    type: uri_file
+code: .
+environment: azureml:Aml-env@latest
+command: >-
+  python validate.py 
+  --metrics_file ${{inputs.metrics_file}}
+  --validation_result ${{outputs.validation_result}}
