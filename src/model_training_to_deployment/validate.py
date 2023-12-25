@@ -36,7 +36,6 @@ def main():
 
     # Connect to the workspace
     credential = DefaultAzureCredential()
-    credential.get_token("https://management.azure.com/.default")
     ml_client = MLClient.from_config(credential=credential)
 
     # Get the racall value of the last registered model which was deployed as default in endpoint
