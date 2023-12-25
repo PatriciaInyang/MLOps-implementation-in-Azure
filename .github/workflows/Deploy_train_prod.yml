@@ -41,16 +41,23 @@ jobs:
         uses: actions/setup-python@v4
         with:
           python-version: "3.8"
+      - name: Create Azure ML Compute
+        run: |
+            cd setup/
+            az ml compute create --file compute.yml --resource-group 220356622-rg --workspace-name MLOPS_project
       - name: Run AML pipeline
         run: |
           cd src/model_training_to_deployment/
+          
           echo "Creating conda environment"
           conda env create -f conda.yml
           source $(conda info --base)/etc/profile.d/conda.sh
           conda activate project_environment
+
           echo "Creating config file"
           mkdir .azureml
           echo -e "{ \"subscription_id\": \"${{ secrets.ARM_SUBSCRIPTION_ID }}\", \"resource_group\": \"220356622-rg\", \"workspace_name\": \"MLOPS_project\" }" > .azureml/config.json
+          
           echo "Run model training and deployment pipeline"
           # Run training to model deployment pipeline
           python Train_deploy_pipeline.py
