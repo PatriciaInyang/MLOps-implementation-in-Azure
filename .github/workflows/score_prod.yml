@@ -20,30 +20,30 @@ on:
   
 jobs:
     deploy_ml_scoring_job:
-    name: PROD Submit scoring job Azure ML
-    runs-on: ubuntu-latest
-    environment: Production
-    steps:
-    - name: Repo checkout
-      uses: actions/checkout@v3
-    - name: Install az CLI
-      run: |
-        # Install the az CLI and ML extension
-        curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
-        az extension add -n ml -y
-        echo "Installed Azure CLI and ML extension"
-    - name: Azure login
-      uses: azure/login@v1
-      with:
-        client-id: ${{ secrets.AZURE_CLIENT_ID }}
-        tenant-id: ${{ secrets.AZURE_TENANT_ID }}
-        subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
-        enable-AzPSSession: true
-    - name: Install and prepare Python
-      uses: actions/setup-python@v4
-      with:
-        python-version: "3.8"
-    - name: Run AML pipeline
+      name: PROD Submit scoring job Azure ML
+      runs-on: ubuntu-latest
+      environment: Production
+      steps:
+      - name: Repo checkout
+        uses: actions/checkout@v3
+      - name: Install az CLI
+        run: |
+          # Install the az CLI and ML extension
+          curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
+          az extension add -n ml -y
+          echo "Installed Azure CLI and ML extension"
+      - name: Azure login
+        uses: azure/login@v1
+        with:
+          client-id: ${{ secrets.ARM_CLIENT_ID }}
+          tenant-id: ${{ secrets.ARM_TENANT_ID }}
+          subscription-id: ${{ secrets.ARM_SUBSCRIPTION_ID }}
+          enable-AzPSSession: true
+      - name: Install and prepare Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.8"
+      - name: Run AML pipeline
         run: |
           cd src/deployment/
           
@@ -53,7 +53,7 @@ jobs:
           
           echo "Creating config file"
           mkdir .azureml
-          echo -e "{ \"subscription_id\": \"${{ secrets.AZURE_SUBSCRIPTION_ID }}\", \"resource_group\": \"CSAzureML\", \"workspace_name\": \"CSAzureML\" }" > .azureml/config.json
+          echo -e "{ \"subscription_id\": \"${{ secrets.ARM_SUBSCRIPTION_ID }}\", \"resource_group\": \"CSAzureML\", \"workspace_name\": \"CSAzureML\" }" > .azureml/config.json
           
           echo "Run script for inferencing"
           # Submit scoring job 

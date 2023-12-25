@@ -14,8 +14,7 @@ on:
       branches:
         - main
       paths:
-        - src/model_training_registration/**
-        - src/model_training_registration/Train_reg_pipeline.py
+        - src/model_training_to_deployment/**
         - .github/workflows/Deploy_train_prod.yml
   
 jobs:
@@ -35,9 +34,9 @@ jobs:
       - name: Azure login
         uses: azure/login@v1
         with:
-          client-id: ${{ secrets.AZURE_CLIENT_ID }}
-          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
-          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+          client-id: ${{ secrets.ARM_CLIENT_ID }}
+          tenant-id: ${{ secrets.ARM_TENANT_ID }}
+          subscription-id: ${{ secrets.ARM_SUBSCRIPTION_ID }}
           enable-AzPSSession: true
       - name: Install and prepare Python
         uses: actions/setup-python@v4
@@ -45,13 +44,13 @@ jobs:
           python-version: "3.8"
       - name: Run AML pipeline
         run: |
-          cd src/model_training_registration/
+          cd src/model_training_to_deployment/
           echo "Creating conda environment"
           conda env create -f conda.yml
           conda activate project_environment
           echo "Creating config file"
           mkdir .azureml
-          echo -e "{ \"subscription_id\": \"${{ secrets.AZURE_SUBSCRIPTION_ID }}\", \"resource_group\": \"CSAzureML\", \"workspace_name\": \"CSAzureML\" }" > .azureml/config.json
-          echo "Run training pipeline"
-          # Run training pipeline
-          python Train_reg_pipeline.py
+          echo -e "{ \"subscription_id\": \"${{ secrets.ARM_SUBSCRIPTION_ID }}\", \"resource_group\": \"CSAzureML\", \"workspace_name\": \"CSAzureML\" }" > .azureml/config.json
+          echo "Run model training and deployment pipeline"
+          # Run training to model deployment pipeline
+          python Train_deploy_pipeline.py
