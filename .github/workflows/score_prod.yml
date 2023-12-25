@@ -32,6 +32,8 @@ jobs:
           curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
           az extension add -n ml -y
           echo "Installed Azure CLI and ML extension"
+      - name: Debug Azure Credentials
+        run: echo "${{ secrets.AZURE_CREDENTIALS }}"
       - name: Azure login
         uses: azure/login@v1
         with:
