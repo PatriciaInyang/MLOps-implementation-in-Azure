@@ -44,7 +44,7 @@ jobs:
           python-version: "3.8"
       - name: Create Azure ML Compute
         run: |
-          az ml computetarget create amlcompute --name VM1 --vm-size STANDARD_D4S_V3 --idle_time_before_scale_down 300
+          az ml compute create amlcompute --name VM1 --vm-size STANDARD_D4S_V3 --idle_time_before_scale_down 300
           # Wait for the compute to be provisioned
           az ml computetarget wait --name VM1 --timeout 1800
       - name: Run AML pipeline
