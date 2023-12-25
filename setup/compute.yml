@@ -1,8 +1,3 @@
-$schema: https://azuremlschemas.azureedge.net/latest/amlCompute.schema.json 
+$schema: https://azuremlschemas.azureedge.net/latest/computeInstance.schema.json
 name: VM1
-type: amlcompute
-size: STANDARD_DS3_v2
-location: UKWest
-min_instances: 0
-max_instances: 2
-idle_time_before_scale_down: 180
+type: computeinstance
