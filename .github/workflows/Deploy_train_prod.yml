@@ -50,7 +50,7 @@ jobs:
           conda activate project_environment
           echo "Creating config file"
           mkdir .azureml
-          echo -e "{ \"subscription_id\": \"${{ secrets.ARM_SUBSCRIPTION_ID }}\", \"resource_group\": \"CSAzureML\", \"workspace_name\": \"CSAzureML\" }" > .azureml/config.json
+          echo -e "{ \"subscription_id\": \"${{ secrets.ARM_SUBSCRIPTION_ID }}\", \"resource_group\": \"220356622-rg\", \"workspace_name\": \"MLOPS_project\" }" > .azureml/config.json
           echo "Run model training and deployment pipeline"
           # Run training to model deployment pipeline
           python Train_deploy_pipeline.py
