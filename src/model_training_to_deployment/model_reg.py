@@ -41,8 +41,6 @@ def register_model(model_path, model_name, ml_client, model_description, recall_
 if __name__ == "__main__":
     # Load the Azure ML workspace
     credential = DefaultAzureCredential()
-    # Check if given credential can get token successfully.
-    credential.get_token("https://management.azure.com/.default")
     ml_client = MLClient.from_config(credential=credential)
 
     parser = argparse.ArgumentParser()
