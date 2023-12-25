@@ -44,6 +44,7 @@ jobs:
           python-version: "3.8"
       - name: Create Azure ML Compute
         run: |
+          cd setup/
           az ml compute create --file compute.yml --resource-group 220356622-rg --workspace-name MLOPS_project
           # Wait for the compute to be provisioned
           az ml compute wait --name VM1 --timeout 1800
