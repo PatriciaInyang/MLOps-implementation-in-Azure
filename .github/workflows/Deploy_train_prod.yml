@@ -46,6 +46,7 @@ jobs:
           cd src/model_training_to_deployment/
           echo "Creating conda environment"
           conda env create -f conda.yml
+          source $(conda info --base)/etc/profile.d/conda.sh
           conda activate project_environment
           echo "Creating config file"
           mkdir .azureml
