@@ -75,8 +75,7 @@ if __name__ == "__main__":
     # connect to the Azure ML workspace
     credential = DefaultAzureCredential()
     # Check if given credential can get token successfully.
-    credential.get_token("https://management.azure.com/.default")
-
+    # credential.get_token("https://management.azure.com/.default")
     ml_client = MLClient.from_config(credential=credential)
 
     # Pass the argument for the endpoint

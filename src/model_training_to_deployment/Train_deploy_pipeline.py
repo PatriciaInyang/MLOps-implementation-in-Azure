@@ -35,7 +35,7 @@ def Reg_training_data(ml_client, my_path='train.csv'):
 def main():
     # Connect to the workspace
     credential = DefaultAzureCredential()
-    credential.get_token("https://management.azure.com/.default")
+    # credential.get_token("https://management.azure.com/.default")
     ml_client = MLClient.from_config(credential=credential)
 
     # Call the Data registeration function
