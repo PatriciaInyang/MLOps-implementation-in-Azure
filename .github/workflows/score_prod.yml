@@ -44,9 +44,10 @@ jobs:
           python-version: "3.8"
       - name: Create Azure ML Compute
         run: |
-          az ml compute create amlcompute --name VM1 --vm-size STANDARD_D4S_V3 --idle_time_before_scale_down 300
+          cd setup/
+          az ml compute create --file compute.yml --resource-group 220356622-rg --workspace-name MLOPS_project
           # Wait for the compute to be provisioned
-          az ml computetarget wait --name VM1 --timeout 1800
+          az ml compute wait --name VM1 --timeout 1800
       - name: Run AML pipeline
         run: |
           cd src/deployment/
