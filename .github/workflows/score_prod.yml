@@ -44,7 +44,7 @@ jobs:
         run: |
           cd setup/
           az ml compute create --file compute.yml --resource-group 220356622-rg --workspace-name MLOPS_project
-      - name: Run AML pipeline
+      - name: Run AML inference pipeline
         run: |
           cd src/inference/
           
