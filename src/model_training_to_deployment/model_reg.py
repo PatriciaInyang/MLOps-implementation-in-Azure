@@ -65,7 +65,7 @@ if __name__ == "__main__":
 
         # define variables for the model registration function
         model_path = args.model
-        model_name = "Vehicle_insur_model"
+        model_name = "Vehicle_insurance_model"
         model_description = 'Cross-selling model for Vehicle insurance'
 
         # Register the newly trained model in azureml workspace

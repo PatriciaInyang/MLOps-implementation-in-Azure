@@ -5,10 +5,10 @@ from azure.ai.ml import MLClient
 
 
 def get_last_model_recall(ml_client):
-    latest_model_version = max([int(m.version) for m in ml_client.models.list(name="Vehicle_insur_model")])
+    latest_model_version = max([int(m.version) for m in ml_client.models.list(name="Vehicle_insurance_model")])
 
     # picking the model to deploy. Here we use the latest version of our registered model
-    model = ml_client.models.get(name="Vehicle_insur_model", version=latest_model_version)
+    model = ml_client.models.get(name="Vehicle_insurance_model", version=latest_model_version)
 
     # Extract the 'Recall' value from the properties. Assuming a default value of 0.0 if 'Recall' is not present
     deployed_model_recall_score = float(model.properties.get('Recall', 0.0))
