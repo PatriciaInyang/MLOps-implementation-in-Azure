@@ -31,8 +31,6 @@ jobs:
           curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
           az extension add -n ml -y
           echo "Installed Azure CLI and ML extension"
-      - name: Debug Azure Credentials
-        run: echo "${{ secrets.AZURE_CREDENTIALS }}"
       - name: Azure login
         uses: azure/login@v1
         with:
@@ -44,7 +42,7 @@ jobs:
       - name: Create Azure ML Compute
         run: |
             cd setup/
-            az ml compute create --file compute_cluster.yml --resource-group 220356622-rg --workspace-name MLOPS_project
+            az ml compute create --file compute.yml --resource-group 220356622-rg --workspace-name MLOPS_project
       - name: Run AML pipeline
         run: |
           cd src/model_training_to_deployment/
