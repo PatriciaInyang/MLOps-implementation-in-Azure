@@ -35,20 +35,20 @@ def Reg_training_data(ml_client, my_path='train.csv'):
 def main():
     # Connect to the workspace
     credential = DefaultAzureCredential()
-    # credential.get_token("https://management.azure.com/.default")
+    credential.get_token("https://management.azure.com/.default")
     ml_client = MLClient.from_config(credential=credential)
 
     # Call the Data registeration function
     Label = Reg_training_data(ml_client, my_path='train.csv')
 
-    # Create components for the model training and model_reg steps
+    # Create components for the model training to deployment steps
     parent_dir = "."
     train_model_component = load_component(source=parent_dir + "/train.yml")
     validate_model_component = load_component(source=parent_dir + "/validate.yml")
     reg_model_component = load_component(source=parent_dir + "/model_reg.yml")
     deploy_model_component = load_component(source=parent_dir + "/deploy_model.yml")
 
-    # Create the pipeline using the @pipeline function to automate the training and model registration components
+    # Create the pipeline using the @pipeline function to automate the training and model deployment components
     @pipeline()
     def model_train_to_deployment(pipeline_job_input):
         # 1st step - Training and evaluate model
