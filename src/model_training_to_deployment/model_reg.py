@@ -59,7 +59,7 @@ if __name__ == "__main__":
     deployment_decision = read_deployment_decision(args.validation_result)
 
     #
-    if deployment_decision == "Yes Model should be deployed":
+    if deployment_decision == "Yes,Model should be deployed":
         # Get the newly trained model recall to be included as properties when registering model
         recall_value = get_evaluation_recall(args.metrics_file)
 

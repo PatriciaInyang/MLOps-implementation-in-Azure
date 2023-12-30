@@ -33,7 +33,7 @@ from sklearn.feature_selection import SelectKBest, mutual_info_classif
 from imblearn.under_sampling import RandomUnderSampler
 from sklearn.compose import ColumnTransformer
 from sklearn.pipeline import Pipeline
-from sklearn.ensemble import GradientBoostingClassifier
+from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import accuracy_score, precision_score, recall_score
 from sklearn.metrics import f1_score, roc_auc_score, roc_curve
 from sklearn.metrics import confusion_matrix, ConfusionMatrixDisplay
@@ -308,7 +308,7 @@ def main():
         X_train, y_train = Balance_data(X_train, y_train, args.train_data, sampling_strategy=1, random_state=seed)
 
     # 4) Define the models to be trained and evaluated
-    models = {'Gradient Boosting': GradientBoostingClassifier(random_state=seed)}
+    models = {'Logistic Regression': LogisticRegression(random_state=seed)}
 
     # 5) Train the models and evaluate their performance.
     # Start Logging
