@@ -1,1 +1,1 @@
-Vehicle_insur_model
+Vehicle_insurance_model
