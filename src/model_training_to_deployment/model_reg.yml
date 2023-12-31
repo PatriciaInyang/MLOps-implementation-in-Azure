@@ -1,6 +1,6 @@
 $schema: https://azuremlschemas.azureedge.net/latest/commandComponent.schema.json
 name: register_model
-display_name: Registered model
+display_name: Model Registration
 version: 1
 type: command
 inputs:
