@@ -5,7 +5,7 @@ permissions:
     pages: write
     id-token: write
     
-name: PROD - Train Model
+name: PROD - Train and deploy Model
     
 on:
     workflow_dispatch:
@@ -18,8 +18,8 @@ on:
         - .github/workflows/Deploy_train_prod.yml
   
 jobs:
-    deploy_ml_training_pipeline:
-      name: PROD - Deploy the Training pipeline to Azure ML
+    model_training_deployment_pipeline:
+      name: PROD - Deploy training_deployment pipeline to Azure ML
       runs-on: ubuntu-latest
       environment: Production
       steps:
