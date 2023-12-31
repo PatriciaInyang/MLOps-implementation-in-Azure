@@ -145,7 +145,7 @@ def get_latest_model(ml_client, model_name):
 def get_RAI_inbuilt_components(ml_client_registry):
 
     rai_constructor_component = ml_client_registry.components.get(
-        name="microsoft_azureml_rai_tabular_insight_constructor", label="latest"
+        name="microsoft_azureml_rai_tabular_insight_constructor", version='0.10.0'
     )
 
     version = rai_constructor_component.version
@@ -207,7 +207,7 @@ if __name__ == "__main__":
     insurance_train_pq, insurance_test_pq = Reg_test_train_data(train_data_path, test_data_path, data_version)
 
     # Define model name
-    model_name = "Vehicle_insur_model"
+    model_name = "Vehicle_insurance_model"
 
     # Call the function to get the latest model
     model, expected_model_id, azureml_model_id = get_latest_model(ml_client, model_name)
@@ -227,7 +227,7 @@ if __name__ == "__main__":
 
     # Create the Rai decision pipeline
     @dsl.pipeline(compute="VM1",
-                  description="RAI insights on insurance data",
+                  description="RAI insights on vechicle insurance model",
                   experiment_name="RAI_insights_insurance_crossell")
     def rai_decision_pipeline(target_column_name, train_data, test_data):
 
