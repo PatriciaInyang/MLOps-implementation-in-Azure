@@ -65,7 +65,7 @@ def main():
         # 4th step - Deploy model to batch-insurance endpoint and make it the default deployment
         deploy_model = deploy_model_component(model_reg_output=register_model.outputs.model_reg_output)
 
-        return {"automated_model_training_to_deployment_pipeline": deploy_model.outputs.model_deploy_output}
+        return {"model_deployed_to_batch_endpoint": deploy_model.outputs.model_deploy_output}
 
     # Define input data  using the data asset registered in the workspace
     pipeline_job_input = Input(type=AssetTypes.URI_FILE, path=f"azureml:data:{Label}")
