@@ -95,14 +95,19 @@ def Split_data(data, test_data_path):
     # Return X_train, X_test, y_train, and y_test
     print("Training data shape without resampling is ", X_train.shape, X_test.shape)
 
-    output_dir = os.path.dirname(test_data_path)
-    os.makedirs(output_dir, exist_ok=True)
-    # Combine the test data back in one file
+    # get current your script directory
+    current_script_directory = os.path.dirname(os.path.abspath(__file__))
+
+    # Specify the relative path to RAI folder
+    RAI_folder = os.path.abspath(os.path.join(current_script_directory, "..", "RAI"))
+
+    # Combine the test data back into one file
     test_data = pd.concat([X_test, y_test], axis=1)
 
     # Save the test dataset to CSV
-    test_data.to_csv(os.path.join(output_dir, 'test_data.csv'), index=False)
+    test_data.to_csv(os.path.join(RAI_folder, test_data_path), index=False)
 
+    print(f"Test data saved to: {os.path.join(RAI_folder, test_data_path)}")
     return X_train, X_test, y_train, y_test
 
 
@@ -113,13 +118,19 @@ def Balance_data(X_train, y_train, train_data_path, sampling_strategy=1, random_
 
     print("Training data shape after resampling is ", X_train_undersampled.shape, y_train_undersampled.shape)
 
-    output_dir = os.path.dirname(train_data_path)
-    os.makedirs(output_dir, exist_ok=True)
     # Combine the balanced train data back in one file
     train_data = pd.concat([X_train_undersampled,  y_train_undersampled], axis=1)
 
-    # Save the test dataset to CSV
-    train_data.to_csv(os.path.join(output_dir, 'train_data.csv'), index=False)
+    # get current your script directory
+    current_script_directory = os.path.dirname(os.path.abspath(__file__))
+
+    # Specify the relative path to RAI folder
+    RAI_folder = os.path.abspath(os.path.join(current_script_directory, "..", "RAI"))
+
+    # Save the balanced training dataset to CSV
+    train_data.to_csv(os.path.join(RAI_folder, train_data_path), index=False)
+
+    print(f"Balanced train data saved to: {os.path.join(RAI_folder, train_data_path)}")
 
     return X_train_undersampled, y_train_undersampled
 
@@ -283,8 +294,8 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--input_data", type=str, dest="input_data", default="train.csv", help="Path to data file")
     parser.add_argument("--model", type=str, dest="model", default="model_path", help="Path to the save model file")
-    parser.add_argument("--test_data", type=str, dest="test_data", default="./RAI/", help="Path to save test_data")
-    parser.add_argument("--train_data", type=str, dest="train_data", default="./RAI/", help="Path to save train_data")
+    parser.add_argument("--test_data", type=str, default="test_data.csv", help="Path to save test_data")
+    parser.add_argument("--train_data", type=str, default="train_data.csv", help="Path to save train_data")
     parser.add_argument("--metrics_file", type=str, dest="metrics_file", default="evaluation_metrics.csv",
                         help="Path to training metrics file")
     args = parser.parse_args()
