@@ -1,3 +1,11 @@
+"""
+This Python script is to validate the trained machine learning model.
+The validation involves comparing the performance (recall) of the newly trained model with
+recall of the current default model deployed to the batch endpoint.
+
+The result of the validation is then saved to an output file called "validation_result.txt".
+"""
+
 import pandas as pd
 import argparse
 from azure.identity import DefaultAzureCredential

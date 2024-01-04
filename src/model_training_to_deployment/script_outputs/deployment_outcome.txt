@@ -1,0 +1,1 @@
+New model insurance-classifier01031239 has been deployed to the batch endpoint
