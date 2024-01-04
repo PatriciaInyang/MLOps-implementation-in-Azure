@@ -21,27 +21,39 @@ The experimentation phase was initially carried out in a notebook for building a
 - Model training and evaluation was done on four classification model.
 - The best performing model based on the highest Recall is selected and saved in a .pkl file
 
-## Preparation for deployment
+## Automated Model training to deployment
 In line with DevOps best practices, the notebook was refactored into production ready scripts contained in the src directory.
-- **train.py:** training script the Gradient boosting classifier model while using MLflow for autologging and tracking metrics .
-- **model_reg.py:**  script for registering the trained model in Azureml workspace.
-- **Train_reg_pipeline.py:** script for creating a pipeline to automate the model training and registration component using the train.yml and model_reg.yml files.
-
-- The conda.yml file specifies the virtual environment dependencies required to execute the code for this project.
-  This configuration has been utilized to register and build a Docker container image within the Azure ML workspace.
-- Github workflow is used to run flake8 linting and standardisation of codes whenever a pull request to created.
-- All pipeline jobs, metrics, model registry, environment registery can be viewed in Azureml studio workspace.
-
-## Batch Deployment and Inferencing
-The directory "/src/deployment" contains the files needed to deploy the model to production. 
-- "code" folder contains the custom batch scoring script named "batch_driver.py" which read in the input data, carryout a label encoding preprocessing step, and passed the transformed data for prediction to the model.
-- "inf_data" is the folder that contains mini_btach files with input data that is fed to the model.
-- Create_batchendpoint is the script for configuring and setting up and Azureml managed batch endpoint.
-- deployment.py is the code for deploying a model to the endpoint.
-- score_job.py contains code for sumbitting a scoring job.
+- **train.py:** training script the Gradient boosting classifier model while using MLflow for autologging and tracking metrics.
+- **validate.py:** Modelvalidation script which assesses if the the trained model meets the redeployment criteria
+- **model_reg.py:**  script for registering a trained model in Azureml workspace. only Models that pass the validation gets registered.
+- **deploy_model.py:** script for deploying model to a batch endpoint. Included in the deployment configuration is a custom batch scoring script with path "code/batch_driver.py"
+  which reads in the input data, carryout a label encoding preprocessing step, and passes the transformed data for prediction to the model.
+  
+- **Train_deploy_pipeline.py:** script for combining the four steps above to runa pipeline job that automate the model training to deployment
+  using AML components configured in the train.yml, model_reg.yml, validate.yml, and deploy_model.yml files.
 
 ## RAI dashboard for model explainability and interpretability
-The directory "/src/RAI" contains the script which constructs the RAI decision pipeline and submits a pipeline job for the RAI dashboard to be created in the workplace when a new model is trained and registered.
+The directory "/src/RAI" contains the script which constructs the RAI decision pipeline and submits a pipeline job for the RAI dashboard to be created in the workplace when a new model is registered.
+
+## Batch Inferencing
+The directory "/src/inference" contains for submiting inference requests to the batch endpoint. 
+- "inf_data" is the folder that contains mini_batch files with input data that is fed to the model.
+- score_job.py contains code for sumbitting a scoring job.
+
+## GitHub action Workflows
+The .github\workflows path automate workflow for executing the contains CI/CD checks and jobs explained below:
+- flake8 workflow for linting and standardisation of codes whenever a pull request to created.
+- score_prod.yml: for triggering a automated submission of scoring job to the model in production.
+- Deploy_train_prod.yml: for automating model retraining and redeployment in production
+
+## setup
+This directory contains stand alone scripts or cofiguration files for setting up requires resources in AML workspace
+- The conda.yml file specifies the virtual environment dependencies required to execute the code for this project.
+  This configuration has been utilized to register and build a Docker container image within the Azure ML workspace.
+- Create_batchendpoint is the script for configuring and setting up and Azureml managed batch endpoint.
+
+All pipeline jobs, metrics, model registry, environment registery can be viewed in Azureml studio workspace.
+
 
 
 

@@ -1,6 +1,8 @@
 """
 This Python script is to register the trained machine learning model
 in the Azureml workspace.
+Models which pass the validation criteria for deployment gets registered to the workplace.
+Models which do not to pass the validation criteria for deployment are skipped from registration
 """
 from azure.ai.ml import MLClient
 from azure.ai.ml.entities import Model

@@ -27,7 +27,6 @@ def Label_encode(data):
 
     # Change the data type of the columns to string
     data[["Policy_Sales_Channel", "Region_Code"]] = data[["Policy_Sales_Channel", "Region_Code"]].astype(str)
-
     return data
 
 
