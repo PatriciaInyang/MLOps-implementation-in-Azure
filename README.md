@@ -1,4 +1,4 @@
-# Implementation of MLOps in Microsoft Azure - for an Insurance Use case. 
+ # Implementation of MLOps in Microsoft Azure - for an Insurance Use case. 
 
 ## Introduction
 MLOps involves the use of DevOps principles to automate the end-to-end process of 

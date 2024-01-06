@@ -1,4 +1,5 @@
 import os
+import json
 import mlflow
 import pandas as pd
 from typing import List, Any, Union
@@ -10,23 +11,20 @@ def Label_encode(data):
     data['Vehicle_Age'] = data['Vehicle_Age'].replace({'< 1 Year': 1, '1-2 Year': 2, '> 2 Years': 3})
     data['Vehicle_Damage'] = data['Vehicle_Damage'].replace({'No': 0, 'Yes': 1})
 
-    # Calculate frequency counts for Policy_Sales_Channel and Region_Code
-    policy_channel_counts = data["Policy_Sales_Channel"].value_counts(normalize=True)
-    region_counts = data["Region_Code"].value_counts(normalize=True)
-
-    # Define a threshold for frequency (0.01)
-    threshold = 0.01
-
-    # Filter and replace values below the threshold with "other" for Policy_Sales_Channel
-    data["Policy_Sales_Channel"] = data["Policy_Sales_Channel"].apply(
-        lambda x: x if policy_channel_counts[x] >= threshold else "other")
-
-    # Filter and replace values below the threshold with "other" for Region_Code
-    data["Region_Code"] = data["Region_Code"].apply(
-        lambda x: x if region_counts[x] >= threshold else "other")
-
-    # Change the data type of the columns to string
+    # Change the channels and region columns data type to string
     data[["Policy_Sales_Channel", "Region_Code"]] = data[["Policy_Sales_Channel", "Region_Code"]].astype(str)
+
+    # Load the save mapping from the model training to apply to the inference data
+    with open('Region_channel_mapping.json', 'r') as file:
+        load_combined_mapping = json.load(file)
+    # Extract individual mappings
+    policy_channel_mapping = load_combined_mapping["policy_channel_mapping"]
+    region_mapping = load_combined_mapping["region_mapping"]
+
+    # Apply the mapping to data columns Policy_Sales_Channel and Region_Code
+    data["Policy_Sales_Channel"] = data["Policy_Sales_Channel"].map(policy_channel_mapping)
+    data["Region_Code"] = data["Region_Code"].map(region_mapping)
+
     return data
 
 

@@ -1,0 +1,8 @@
+id,Gender,Age,Driving_License,Region_Code,Previously_Insured,Vehicle_Age,Vehicle_Damage,Annual_Premium,Policy_Sales_Channel,Vintage
+508140,Female,71,1,3.0,1,1-2 Year,No,2630.0,124.0,147
+508141,Male,21,1,8.0,1,< 1 Year,No,35767.0,152.0,195
+508142,Female,26,1,37.0,1,< 1 Year,No,30867.0,152.0,56
+508143,Female,38,1,28.0,0,1-2 Year,Yes,28700.0,122.0,165
+508144,Male,21,1,46.0,1,< 1 Year,No,29802.0,152.0,74
+508145,Male,71,1,28.0,1,1-2 Year,No,62875.0,26.0,265
+508146,Male,41,1,29.0,1,1-2 Year,No,27927.0,124.0,231

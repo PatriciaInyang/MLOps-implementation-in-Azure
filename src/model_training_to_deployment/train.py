@@ -23,6 +23,7 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 import os
+import json
 import joblib
 import random
 import mlflow
@@ -65,16 +66,33 @@ def Label_encode(data):
     # Define a threshold for frequency (0.01)
     threshold = 0.01
 
-    # Filter and replace values below the threshold with "other" for Policy_Sales_Channel
-    data["Policy_Sales_Channel"] = data["Policy_Sales_Channel"].apply(
-        lambda x: x if policy_channel_counts[x] >= threshold else "other")
+    # Create mappings based on frequency threshold
+    policy_channel_mapping = {}
+    for channel, count in policy_channel_counts.items():
+        if count >= threshold:
+            policy_channel_mapping[channel] = str(channel)
+        else:
+            policy_channel_mapping[channel] = "other"
 
-    # Filter and replace values below the threshold with "other" for Region_Code
-    data["Region_Code"] = data["Region_Code"].apply(
-        lambda x: x if region_counts[x] >= threshold else "other")
+    region_mapping = {}
+    for region, count in region_counts.items():
+        if count >= threshold:
+            region_mapping[region] = str(region)
+        else:
+            region_mapping[region] = "other"
 
-    # Change the data type of the columns to string
-    data[["Policy_Sales_Channel", "Region_Code"]] = data[["Policy_Sales_Channel", "Region_Code"]].astype(str)
+    # Apply the mapping to data columns Policy_Sales_Channel and Region_Code
+    data["Policy_Sales_Channel"] = data["Policy_Sales_Channel"].map(policy_channel_mapping)
+    data["Region_Code"] = data["Region_Code"].map(region_mapping)
+
+    # Combine both mappings into a dictionary
+    combined_mapping = {"policy_channel_mapping": policy_channel_mapping, "region_mapping": region_mapping}
+
+    # Save the combined mapping to a file to be used in the scoring pipeline directory
+    folder_path = "code"
+    file_path = os.path.join(folder_path, 'Region_channel_mapping.json')
+    with open(file_path, 'w') as file:
+        json.dump(combined_mapping, file)
 
     return data
 
