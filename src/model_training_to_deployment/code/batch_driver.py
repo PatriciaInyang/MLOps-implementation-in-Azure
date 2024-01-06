@@ -1,5 +1,4 @@
 import os
-import json
 import mlflow
 import pandas as pd
 from typing import List, Any, Union
@@ -14,16 +13,20 @@ def Label_encode(data):
     # Change the channels and region columns data type to string
     data[["Policy_Sales_Channel", "Region_Code"]] = data[["Policy_Sales_Channel", "Region_Code"]].astype(str)
 
-    # Load the save mapping from the model training to apply to the inference data
-    with open('Region_channel_mapping.json', 'r') as file:
-        load_combined_mapping = json.load(file)
-    # Extract individual mappings
-    policy_channel_mapping = load_combined_mapping["policy_channel_mapping"]
-    region_mapping = load_combined_mapping["region_mapping"]
+    # List of most occuring sales regions
+    Sales_region_from_training = ['28.0', '3.0', '11.0', '41.0', '33.0', '6.0', '35.0', '50.0',
+                                  '15.0', '45.0', '8.0', '36.0', '30.0', '47.0', '48.0', '39.0',
+                                  '37.0', '2.0', '29.0', '46.0', '13.0', '18.0', '21.0', '10.0', '14.0']
 
-    # Apply the mapping to data columns Policy_Sales_Channel and Region_Code
-    data["Policy_Sales_Channel"] = data["Policy_Sales_Channel"].map(policy_channel_mapping)
-    data["Region_Code"] = data["Region_Code"].map(region_mapping)
+    # List of most occuring sales channels
+    Sales_Channel_from_training = ['26.0', '152.0', '160.0', '124.0', '156.0', '157.0', '122.0', '154.0', '151.0']
+
+    # Replace values not in the Sales_region_from_training list with 'other'
+    data['Region_Code'] = data['Region_Code'].apply(lambda x: x if x in Sales_region_from_training else 'other')
+
+    # Replace values not in the Sales_Channel_from_training list with 'other'
+    data['Policy_Sales_Channel'] = data['Policy_Sales_Channel'].apply(
+                                   lambda x: x if x in Sales_Channel_from_training else 'other')
 
     return data
 
