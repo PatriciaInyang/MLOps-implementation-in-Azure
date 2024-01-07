@@ -54,11 +54,9 @@ This directory contains stand alone scripts or cofiguration files for setting up
 
 All pipeline jobs, metrics, model registry, environment registery can be viewed in Azureml studio workspace.
 
+## Flow diagram of how the MLOps was designed and how the pipelines are connected
 
-
-
-
-
+![MLOps implementation flow daigram](https://github.com/PatriciaInyang/MLOps-implementation-in-Azure/assets/115210334/f13e3bf8-f12a-4e18-be5f-e980a0399fa1)
 
 
 
