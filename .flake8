@@ -1,5 +1,2 @@
 [flake8]
-# Lint config to exclude workflow files because it is able to detect that 
-# the production environment have not been set up in github with the secrets.
-# exclude = .github/workflows/Deploy_model_prod.yml, .github/workflows/Deploy_train_prod.yml
 max-line-length = 120
